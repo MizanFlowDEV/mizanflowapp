@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
-import { Text, Card, IconButton, useTheme } from 'react-native-paper';
+import { Text, Card, IconButton } from 'react-native-paper';
 import { useBudget } from '../contexts/BudgetContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useAppTheme } from '../hooks/useAppTheme';
 import { BudgetItem } from '../contexts/BudgetContext';
 
 interface BudgetListProps {
@@ -13,17 +14,42 @@ interface BudgetListProps {
 export default function BudgetList({ onEditItem, onDeleteItem }: BudgetListProps) {
   const { budgetItems } = useBudget();
   const { t, isRTL } = useLanguage();
-  const theme = useTheme();
+  const { colors, typography, spacing } = useAppTheme();
 
   const renderItem = ({ item }: { item: BudgetItem }) => (
-    <Card style={styles.card}>
+    <Card 
+      style={[
+        styles.card,
+        { marginBottom: spacing.components.card.margin }
+      ]}
+    >
       <Card.Content style={styles.cardContent}>
         <View style={styles.itemInfo}>
-          <Text variant="titleMedium">{item.category}</Text>
-          <Text variant="bodyMedium" style={{ color: theme.colors.onSurfaceVariant }}>
+          <Text 
+            variant="titleMedium"
+            style={[
+              styles.category,
+              { color: colors.text.primary }
+            ]}
+          >
+            {item.category}
+          </Text>
+          <Text 
+            variant="bodyMedium"
+            style={[
+              styles.description,
+              { color: colors.text.secondary }
+            ]}
+          >
             {item.description}
           </Text>
-          <Text variant="bodySmall" style={{ color: theme.colors.onSurfaceVariant }}>
+          <Text 
+            variant="bodySmall"
+            style={[
+              styles.date,
+              { color: colors.text.secondary }
+            ]}
+          >
             {new Date(item.date).toLocaleDateString()}
             {item.recurring && ` • ${t(`budget.${item.recurringInterval}`)}`}
           </Text>
@@ -33,7 +59,10 @@ export default function BudgetList({ onEditItem, onDeleteItem }: BudgetListProps
             variant="titleMedium"
             style={[
               styles.amount,
-              { color: item.type === 'income' ? theme.colors.primary : theme.colors.error }
+              { 
+                color: item.type === 'income' ? colors.success.main : colors.error.main,
+                fontWeight: typography.fontWeight.bold
+              }
             ]}
           >
             {item.type === 'income' ? '+' : '-'}
@@ -42,13 +71,15 @@ export default function BudgetList({ onEditItem, onDeleteItem }: BudgetListProps
           <View style={styles.actions}>
             <IconButton
               icon="pencil"
-              size={20}
+              size={spacing.components.icon.size}
               onPress={() => onEditItem(item)}
+              style={{ padding: spacing.components.icon.padding }}
             />
             <IconButton
               icon="delete"
-              size={20}
+              size={spacing.components.icon.size}
               onPress={() => onDeleteItem(item.id)}
+              style={{ padding: spacing.components.icon.padding }}
             />
           </View>
         </View>
@@ -61,10 +92,25 @@ export default function BudgetList({ onEditItem, onDeleteItem }: BudgetListProps
       data={budgetItems}
       renderItem={renderItem}
       keyExtractor={item => item.id}
-      contentContainerStyle={styles.list}
+      contentContainerStyle={[
+        styles.list,
+        { padding: spacing.layout.list }
+      ]}
       ListEmptyComponent={
-        <View style={styles.emptyContainer}>
-          <Text variant="bodyLarge" style={{ textAlign: 'center' }}>
+        <View style={[
+          styles.emptyContainer,
+          { padding: spacing.xl }
+        ]}>
+          <Text 
+            variant="bodyLarge" 
+            style={[
+              styles.emptyText,
+              { 
+                textAlign: 'center',
+                color: colors.text.secondary
+              }
+            ]}
+          >
             {t('budget.noItems')}
           </Text>
         </View>
@@ -75,10 +121,10 @@ export default function BudgetList({ onEditItem, onDeleteItem }: BudgetListProps
 
 const styles = StyleSheet.create({
   list: {
-    padding: 16,
+    flexGrow: 1,
   },
   card: {
-    marginBottom: 8,
+    elevation: 2,
   },
   cardContent: {
     flexDirection: 'row',
@@ -88,17 +134,30 @@ const styles = StyleSheet.create({
   itemInfo: {
     flex: 1,
   },
+  category: {
+    marginBottom: 4,
+  },
+  description: {
+    marginBottom: 4,
+  },
+  date: {
+    marginBottom: 4,
+  },
   amountContainer: {
     alignItems: 'flex-end',
   },
   amount: {
-    fontWeight: 'bold',
     marginBottom: 4,
   },
   actions: {
     flexDirection: 'row',
   },
   emptyContainer: {
-    padding: 32,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  emptyText: {
+    textAlign: 'center',
   },
 }); 

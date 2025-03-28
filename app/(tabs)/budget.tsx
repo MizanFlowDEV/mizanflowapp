@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, FlatList, SectionList } from 'react-native';
 import { Text, FAB, Portal, Modal, useTheme, SegmentedButtons, Button } from 'react-native-paper';
 import { useBudget } from '../../src/contexts/BudgetContext';
 import { useLanguage } from '../../src/contexts/LanguageContext';
@@ -15,36 +15,18 @@ import * as DocumentPicker from 'expo-document-picker';
 
 export default function BudgetScreen() {
   const { totalIncome, totalExpenses, balance, deleteBudgetItem, updateBudgetItem, exportBudgetData, importBudgetData } = useBudget();
-  const { t, isRTL } = useLanguage();
+  const { t } = useLanguage();
   const theme = useTheme();
   const [showAddModal, setShowAddModal] = useState(false);
-  const [editingItem, setEditingItem] = useState<BudgetItem | null>(null);
   const [activeTab, setActiveTab] = useState('overview');
-
-  const handleEditItem = (item: BudgetItem) => {
-    setEditingItem(item);
-    setShowAddModal(true);
-  };
-
-  const handleDeleteItem = async (id: string) => {
-    try {
-      await deleteBudgetItem(id);
-    } catch (error) {
-      console.error('Error deleting budget item:', error);
-    }
-  };
 
   const handleCloseModal = () => {
     setShowAddModal(false);
-    setEditingItem(null);
   };
 
   const handleExport = async () => {
     try {
-      const data = await exportBudgetData();
-      const fileUri = `${FileSystem.documentDirectory}budget_data.json`;
-      await FileSystem.writeAsStringAsync(fileUri, data);
-      await Sharing.shareAsync(fileUri);
+      await exportBudgetData();
     } catch (error) {
       console.error('Error exporting budget data:', error);
     }
@@ -52,65 +34,56 @@ export default function BudgetScreen() {
 
   const handleImport = async () => {
     try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: 'application/json',
-      });
-
-      if (result.assets && result.assets.length > 0) {
-        const fileContent = await FileSystem.readAsStringAsync(result.assets[0].uri);
-        await importBudgetData(fileContent);
-      }
+      await importBudgetData();
     } catch (error) {
       console.error('Error importing budget data:', error);
     }
   };
+
+  const renderHeader = () => (
+    <>
+      <SegmentedButtons
+        value={activeTab}
+        onValueChange={setActiveTab}
+        buttons={[
+          { value: 'overview', label: t('budget.overview') },
+          { value: 'categories', label: t('budget.categories') },
+          { value: 'goals', label: t('budget.goals') },
+        ]}
+        style={styles.segmentedButtons}
+      />
+      {activeTab === 'overview' && (
+        <View style={styles.summary}>
+          <View style={styles.summaryCard}>
+            <Text variant="bodyMedium" style={styles.summaryTitle}>{t('budget.income')}</Text>
+            <Text variant="titleLarge" style={[styles.amount, { color: theme.colors.primary }]}>
+              {totalIncome.toFixed(2)}
+            </Text>
+          </View>
+          <View style={styles.summaryCard}>
+            <Text variant="bodyMedium" style={styles.summaryTitle}>{t('budget.expenses')}</Text>
+            <Text variant="titleLarge" style={[styles.amount, { color: theme.colors.error }]}>
+              {totalExpenses.toFixed(2)}
+            </Text>
+          </View>
+          <View style={styles.summaryCard}>
+            <Text variant="bodyMedium" style={styles.summaryTitle}>{t('budget.balance')}</Text>
+            <Text variant="titleLarge" style={[styles.amount, { color: balance >= 0 ? theme.colors.primary : theme.colors.error }]}>
+              {balance.toFixed(2)}
+            </Text>
+          </View>
+        </View>
+      )}
+    </>
+  );
 
   const renderContent = () => {
     switch (activeTab) {
       case 'overview':
         return (
           <>
-            <View style={styles.summary}>
-              <View style={styles.summaryCard}>
-                <Text variant="titleMedium" style={styles.summaryTitle}>
-                  {t('budget.totalIncome')}
-                </Text>
-                <Text variant="headlineMedium" style={[styles.amount, { color: theme.colors.primary }]}>
-                  {totalIncome.toFixed(2)}
-                </Text>
-              </View>
-
-              <View style={styles.summaryCard}>
-                <Text variant="titleMedium" style={styles.summaryTitle}>
-                  {t('budget.totalExpenses')}
-                </Text>
-                <Text variant="headlineMedium" style={[styles.amount, { color: theme.colors.error }]}>
-                  {totalExpenses.toFixed(2)}
-                </Text>
-              </View>
-
-              <View style={styles.summaryCard}>
-                <Text variant="titleMedium" style={styles.summaryTitle}>
-                  {t('budget.balance')}
-                </Text>
-                <Text
-                  variant="headlineMedium"
-                  style={[
-                    styles.amount,
-                    { color: balance >= 0 ? theme.colors.primary : theme.colors.error }
-                  ]}
-                >
-                  {balance.toFixed(2)}
-                </Text>
-              </View>
-            </View>
-
             <BudgetAnalytics />
-
-            <BudgetList
-              onEditItem={handleEditItem}
-              onDeleteItem={handleDeleteItem}
-            />
+            <BudgetList onEditItem={() => {}} onDeleteItem={deleteBudgetItem} />
           </>
         );
       case 'categories':
@@ -124,20 +97,13 @@ export default function BudgetScreen() {
 
   return (
     <View style={styles.container}>
-      <SegmentedButtons
-        value={activeTab}
-        onValueChange={setActiveTab}
-        buttons={[
-          { value: 'overview', label: t('budget.overview') },
-          { value: 'categories', label: t('budget.categories') },
-          { value: 'goals', label: t('budget.goals') },
-        ]}
-        style={styles.segmentedButtons}
+      <SectionList
+        sections={[{ data: [], renderItem: () => null }]}
+        renderSectionHeader={() => renderHeader()}
+        renderSectionFooter={() => renderContent()}
+        contentContainerStyle={styles.contentContainer}
+        stickySectionHeadersEnabled={false}
       />
-
-      <ScrollView style={styles.scrollView}>
-        {renderContent()}
-      </ScrollView>
 
       <Portal>
         <Modal
@@ -180,8 +146,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  scrollView: {
-    flex: 1,
+  contentContainer: {
+    flexGrow: 1,
   },
   segmentedButtons: {
     margin: 16,

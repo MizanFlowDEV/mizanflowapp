@@ -1,68 +1,50 @@
 import { Tabs } from 'expo-router';
-import { useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useLanguage } from '../../src/contexts/LanguageContext';
+import { useColorScheme } from 'react-native';
 
-export default function TabsLayout() {
-  const theme = useTheme();
-  const { t } = useLanguage();
+import Colors from '@/constants/Colors';
+
+export default function TabLayout() {
+  const colorScheme = useColorScheme();
 
   return (
     <Tabs
       screenOptions={{
-        headerStyle: {
-          backgroundColor: theme.colors.primary,
-        },
-        headerTintColor: theme.colors.onPrimary,
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.onSurfaceDisabled,
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      }}
-    >
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+      }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: t('home'),
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" size={size} color={color} />
+          title: 'Dashboard',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="view-dashboard" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="budget"
         options={{
-          title: t('budget'),
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="wallet" size={size} color={color} />
+          title: 'Budget',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="wallet" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="salary"
+        name="transactions"
         options={{
-          title: t('salary'),
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="cash" size={size} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="schedule"
-        options={{
-          title: t('schedule'),
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="calendar" size={size} color={color} />
+          title: 'Transactions',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="bank-transfer" size={24} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          title: t('settings'),
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="cog" size={size} color={color} />
+          title: 'Settings',
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="cog" size={24} color={color} />
           ),
         }}
       />

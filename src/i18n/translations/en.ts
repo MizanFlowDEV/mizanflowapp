@@ -1,24 +1,28 @@
+import { shiftTranslations } from './shift';
+
 export default {
   // Common translations
-  email: 'Email',
-  password: 'Password',
-  confirmPassword: 'Confirm Password',
-  createAccount: 'Create Account',
-  signUp: 'Sign Up',
-  signIn: 'Sign In',
-  alreadyHaveAccount: 'Already have an account?',
-  acceptTerms: 'I accept the',
-  termsAndConditions: 'Terms and Conditions',
-  
-  // Validation messages
-  emailRequired: 'Email is required',
-  invalidEmail: 'Please enter a valid email address',
-  passwordRequired: 'Password is required',
-  passwordTooShort: 'Password must be at least 6 characters',
-  confirmPasswordRequired: 'Please confirm your password',
-  passwordsDoNotMatch: 'Passwords do not match',
-  acceptTermsRequired: 'You must accept the terms and conditions',
-  signUpError: 'An error occurred during sign up',
+  common: {
+    email: 'Email',
+    password: 'Password',
+    confirmPassword: 'Confirm Password',
+    createAccount: 'Create Account',
+    signUp: 'Sign Up',
+    signIn: 'Sign In',
+    alreadyHaveAccount: 'Already have an account?',
+    acceptTerms: 'I accept the',
+    termsAndConditions: 'Terms and Conditions',
+    validation: {
+      emailRequired: 'Email is required',
+      invalidEmail: 'Please enter a valid email address',
+      passwordRequired: 'Password is required',
+      passwordTooShort: 'Password must be at least 6 characters',
+      confirmPasswordRequired: 'Please confirm your password',
+      passwordsDoNotMatch: 'Passwords do not match',
+      acceptTermsRequired: 'You must accept the terms and conditions',
+      signUpError: 'An error occurred during sign up'
+    }
+  },
 
   // Auth section translations
   auth: {
@@ -39,8 +43,8 @@ export default {
         invalidPassword: 'Password must be at least 6 characters',
         invalidCredentials: 'Invalid email or password',
         emailNotVerified: 'Please verify your email before signing in',
-        unknown: 'An error occurred. Please try again.',
-      },
+        unknown: 'An error occurred. Please try again.'
+      }
     },
     signUp: {
       title: 'Create Account',
@@ -61,8 +65,8 @@ export default {
         passwordsDontMatch: 'Passwords do not match',
         termsRequired: 'You must agree to the terms and conditions',
         emailInUse: 'This email is already registered',
-        unknown: 'An error occurred. Please try again.',
-      },
+        unknown: 'An error occurred. Please try again.'
+      }
     },
     forgotPassword: {
       title: 'Reset Password',
@@ -73,12 +77,12 @@ export default {
       backToSignIn: 'Back to Sign In',
       errors: {
         invalidEmail: 'Please enter a valid email address',
-        unknown: 'An error occurred. Please try again.',
+        unknown: 'An error occurred. Please try again.'
       },
       success: {
         title: 'Check your email',
-        message: 'We have sent you a password reset link',
-      },
+        message: 'We have sent you a password reset link'
+      }
     },
     verifyEmail: {
       title: 'Verify Email',
@@ -86,12 +90,12 @@ export default {
       resendButton: 'Resend Verification Email',
       backToSignIn: 'Back to Sign In',
       errors: {
-        unknown: 'An error occurred. Please try again.',
+        unknown: 'An error occurred. Please try again.'
       },
       success: {
         title: 'Verification Email Sent',
-        message: 'Please check your email to verify your account',
-      },
+        message: 'Please check your email to verify your account'
+      }
     },
     resetPassword: {
       title: 'Reset Password',
@@ -104,68 +108,67 @@ export default {
       errors: {
         invalidPassword: 'Password must be at least 6 characters',
         passwordsDontMatch: 'Passwords do not match',
-        unknown: 'An error occurred. Please try again.',
+        unknown: 'An error occurred. Please try again.'
       },
       success: {
         title: 'Password Reset',
-        message: 'Your password has been reset successfully',
-      },
-    },
+        message: 'Your password has been reset successfully'
+      }
+    }
   },
 
   // Budget section translations
   budget: {
-    // Overview section
-    monthlyOverview: 'Monthly Overview',
-    income: 'Income',
-    expenses: 'Expenses',
+    title: 'Budget',
+    overview: 'Overview',
+    income: {
+      title: 'Income',
+      add: 'Add Income',
+      edit: 'Edit Income',
+      delete: 'Delete Income',
+      noIncome: 'No income added yet',
+      total: 'Total Income',
+      monthly: 'Monthly Income',
+      source: 'Income Source',
+      amount: 'Amount',
+      date: 'Date',
+      category: 'Category',
+      description: 'Description',
+      recurring: 'Recurring',
+      frequency: 'Frequency'
+    },
+    expenses: {
+      title: 'Expenses',
+      add: 'Add Expense',
+      edit: 'Edit Expense',
+      delete: 'Delete Expense',
+      noExpenses: 'No expenses added yet',
+      total: 'Total Expenses',
+      monthly: 'Monthly Expenses'
+    },
+    categories: {
+      title: 'Budget Categories',
+      add: 'Add Category',
+      edit: 'Edit Category',
+      delete: 'Delete Category',
+      noCategories: 'No categories added yet'
+    },
+    goals: {
+      title: 'Budget Goals',
+      add: 'Add Goal',
+      edit: 'Edit Goal',
+      delete: 'Delete Goal',
+      noGoals: 'No goals set yet'
+    },
     balance: 'Balance',
     totalIncome: 'Total Income',
     totalExpenses: 'Total Expenses',
-    overview: 'Overview',
-
-    // Goals section
-    goals: {
-      title: 'Budget Goals',
-      noGoals: 'No goals set',
-      addGoal: 'Add Goal',
-      editGoal: 'Edit Goal',
-      goalName: 'Goal Name',
-      targetAmount: 'Target Amount',
-      currentAmount: 'Current Amount',
-      deadline: 'Deadline',
-      category: 'Category'
+    recurring: {
+      daily: 'Daily',
+      weekly: 'Weekly',
+      monthly: 'Monthly',
+      yearly: 'Yearly'
     },
-
-    // Categories section
-    categories: {
-      title: 'Categories',
-      noCategories: 'No categories',
-      addCategory: 'Add Category',
-      editCategory: 'Edit Category',
-      expenseByCategory: 'Expense by Category',
-      import: 'Import',
-      categoryName: 'Category Name',
-      categoryIcon: 'Category Icon',
-      budget: 'Budget',
-      spent: 'Spent',
-      remaining: 'Remaining'
-    },
-
-    // Budget items
-    addItem: 'Add Budget Item',
-    editItem: 'Edit Budget Item',
-    category: 'Category',
-    amount: 'Amount',
-    description: 'Description',
-    date: 'Date',
-    recurring: 'Recurring',
-    type: 'Type',
-    expense: 'Expense',
-    income: 'Income',
-    noItems: 'No budget items yet',
-
-    // Actions
     actions: {
       add: 'Add',
       edit: 'Edit',
@@ -173,22 +176,22 @@ export default {
       save: 'Save',
       cancel: 'Cancel'
     },
-
-    // Import/Export
-    export: 'Export',
-    import: 'Import',
-    exportSuccess: 'Budget data exported successfully',
-    exportError: 'Failed to export budget data',
-    importSuccess: 'Budget data imported successfully',
-    importError: 'Failed to import budget data',
-
-    // Validation
-    errors: {
+    importExport: {
+      export: 'Export',
+      import: 'Import',
+      exportSuccess: 'Budget data exported successfully',
+      exportError: 'Failed to export budget data',
+      importSuccess: 'Budget data imported successfully',
+      importError: 'Failed to import budget data'
+    },
+    validation: {
       invalidAmount: 'Please enter a valid amount',
       categoryRequired: 'Category is required',
       amountRequired: 'Amount is required',
-      dateRequired: 'Date is required',
       descriptionRequired: 'Description is required'
     }
-  }
+  },
+
+  // Schedule section translations
+  schedule: shiftTranslations
 }; 

@@ -5,7 +5,13 @@ export default {
   budget: {
     // Overview section
     monthlyOverview: 'نظرة شهرية',
-    income: 'الدخل',
+    income: {
+      title: 'الدخل',
+      add: 'إضافة دخل',
+      edit: 'تعديل الدخل',
+      delete: 'حذف الدخل',
+      noIncome: 'لا يوجد دخل بعد'
+    },
     expenses: 'المصروفات',
     balance: 'الرصيد',
     totalIncome: 'إجمالي الدخل',
@@ -50,7 +56,6 @@ export default {
     recurring: 'متكرر',
     type: 'النوع',
     expense: 'مصروف',
-    income: 'دخل',
     noItems: 'لا توجد عناصر بعد',
 
     // Actions

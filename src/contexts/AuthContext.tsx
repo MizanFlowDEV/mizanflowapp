@@ -3,6 +3,7 @@ import { supabase } from '../config/supabase';
 import { Session, User as SupabaseUser } from '@supabase/supabase-js';
 import { Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { logger } from '../utils/logger';
 
 interface User {
   id: string;
@@ -56,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             .single();
 
           if (profileError) {
-            console.error('Error fetching user profile:', profileError);
+            logger.error('Error fetching user profile:', profileError);
             throw profileError;
           }
 
@@ -96,7 +97,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           .single();
 
         if (profileError) {
-          console.error('Error fetching user profile:', profileError);
+          logger.error('Error fetching user profile:', profileError);
           throw profileError;
         }
 
@@ -119,7 +120,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
     } catch (error) {
-      console.error('Error loading user:', error);
+      logger.error('Error loading user:', error);
     } finally {
       setIsLoading(false);
     }
@@ -133,13 +134,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         password,
       });
 
-      if (error) throw error;
+      if (error) {
+        logger.error('Error signing in:', error);
+        throw error;
+      }
 
       if (data.user && !data.user.email_confirmed_at) {
         throw new Error('Please verify your email before signing in');
       }
     } catch (error) {
-      console.error('Error signing in:', error);
+      logger.error('Error signing in:', error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -165,7 +169,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         },
       });
 
-      if (error) throw error;
+      if (error) {
+        logger.error('Error signing up:', error);
+        throw error;
+      }
 
       // Create user profile in the database
       const { error: profileError } = await supabase
@@ -185,7 +192,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         ]);
 
       if (profileError) {
-        console.error('Error creating user profile:', profileError);
+        logger.error('Error creating user profile:', profileError);
         // Attempt to delete the auth user if profile creation fails
         await supabase.auth.admin.deleteUser(data.user?.id as string);
         throw new Error('Failed to create user profile');
@@ -193,7 +200,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       // Don't set the user here - wait for email verification
     } catch (error) {
-      console.error('Error signing up:', error);
+      logger.error('Error signing up:', error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -204,12 +211,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(true);
     try {
       const { error } = await supabase.auth.signOut();
-      if (error) throw error;
+      if (error) {
+        logger.error('Error signing out:', error);
+        throw error;
+      }
       
       await AsyncStorage.removeItem('user');
       setUser(null);
     } catch (error) {
-      console.error('Error signing out:', error);
+      logger.error('Error signing out:', error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -237,7 +247,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await AsyncStorage.setItem('user', JSON.stringify(anonymousUser));
       setUser(anonymousUser);
     } catch (error) {
-      console.error('Error continuing without account:', error);
+      logger.error('Error continuing without account:', error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -262,7 +272,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await AsyncStorage.setItem('user', JSON.stringify(updatedUser));
       setUser(updatedUser);
     } catch (error) {
-      console.error('Error updating anonymous profile:', error);
+      logger.error('Error updating anonymous profile:', error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -294,7 +304,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await AsyncStorage.removeItem('user');
       setUser(null);
     } catch (error) {
-      console.error('Error converting to full account:', error);
+      logger.error('Error converting to full account:', error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -310,7 +320,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       if (error) throw error;
     } catch (error) {
-      console.error('Error resetting password:', error);
+      logger.error('Error resetting password:', error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -345,7 +355,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       }
     } catch (error) {
-      console.error('Error verifying email:', error);
+      logger.error('Error verifying email:', error);
       throw error;
     } finally {
       setIsLoading(false);
@@ -364,7 +374,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       if (error) throw error;
     } catch (error) {
-      console.error('Error resending verification email:', error);
+      logger.error('Error resending verification email:', error);
       throw error;
     } finally {
       setIsLoading(false);

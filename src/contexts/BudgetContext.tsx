@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from './AuthContext';
 import * as Notifications from 'expo-notifications';
+import { View, ActivityIndicator } from 'react-native';
 
 export interface BudgetItem {
   id: string;
@@ -53,19 +54,27 @@ interface BudgetContextType {
   isLoading: boolean;
 }
 
-const BudgetContext = createContext<BudgetContextType | undefined>(undefined);
+const BudgetContext = createContext<BudgetContextType | null>(null);
 
 export function BudgetProvider({ children }: { children: React.ReactNode }) {
+  const { user } = useAuth();
   const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([]);
   const [categories, setCategories] = useState<BudgetCategory[]>([]);
   const [goals, setGoals] = useState<BudgetGoal[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useAuth();
 
   useEffect(() => {
-    loadBudgetData();
-    setupNotifications();
-  }, []);
+    if (user) {
+      loadBudgetData();
+      setupNotifications();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      saveBudgetData();
+    }
+  }, [budgetItems, categories, goals, user]);
 
   const setupNotifications = async () => {
     const { status } = await Notifications.requestPermissionsAsync();
@@ -85,16 +94,16 @@ export function BudgetProvider({ children }: { children: React.ReactNode }) {
 
   const loadBudgetData = async () => {
     try {
-      const userId = user?.id || 'anonymous';
-      const [storedItems, storedCategories, storedGoals] = await Promise.all([
-        AsyncStorage.getItem(`budget_${userId}`),
-        AsyncStorage.getItem(`categories_${userId}`),
-        AsyncStorage.getItem(`goals_${userId}`),
-      ]);
-
-      if (storedItems) setBudgetItems(JSON.parse(storedItems));
-      if (storedCategories) setCategories(JSON.parse(storedCategories));
-      if (storedGoals) setGoals(JSON.parse(storedGoals));
+      setIsLoading(true);
+      if (user) {
+        const data = await AsyncStorage.getItem(`budget_${user.id}`);
+        if (data) {
+          const parsedData = JSON.parse(data);
+          setBudgetItems(parsedData.items || []);
+          setCategories(parsedData.categories || []);
+          setGoals(parsedData.goals || []);
+        }
+      }
     } catch (error) {
       console.error('Error loading budget data:', error);
     } finally {
@@ -104,12 +113,13 @@ export function BudgetProvider({ children }: { children: React.ReactNode }) {
 
   const saveBudgetData = async () => {
     try {
-      const userId = user?.id || 'anonymous';
-      await Promise.all([
-        AsyncStorage.setItem(`budget_${userId}`, JSON.stringify(budgetItems)),
-        AsyncStorage.setItem(`categories_${userId}`, JSON.stringify(categories)),
-        AsyncStorage.setItem(`goals_${userId}`, JSON.stringify(goals)),
-      ]);
+      if (user) {
+        await AsyncStorage.setItem(`budget_${user.id}`, JSON.stringify({
+          items: budgetItems,
+          categories: categories,
+          goals: goals,
+        }));
+      }
     } catch (error) {
       console.error('Error saving budget data:', error);
     }
@@ -257,41 +267,39 @@ export function BudgetProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
-  const totalIncome = budgetItems
-    .filter(item => item.type === 'income')
-    .reduce((sum, item) => sum + item.amount, 0);
+  if (isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
-  const totalExpenses = budgetItems
-    .filter(item => item.type === 'expense')
-    .reduce((sum, item) => sum + item.amount, 0);
-
-  const balance = totalIncome - totalExpenses;
+  const value = {
+    budgetItems,
+    categories,
+    goals,
+    totalIncome: budgetItems.reduce((sum, item) => sum + (item.type === 'income' ? item.amount : 0), 0),
+    totalExpenses: budgetItems.reduce((sum, item) => sum + (item.type === 'expense' ? item.amount : 0), 0),
+    balance: budgetItems.reduce((sum, item) => sum + (item.type === 'income' ? item.amount : -item.amount), 0),
+    addBudgetItem,
+    updateBudgetItem,
+    deleteBudgetItem,
+    addCategory,
+    updateCategory,
+    deleteCategory,
+    addGoal,
+    updateGoal,
+    deleteGoal,
+    updateGoalProgress,
+    exportBudgetData,
+    importBudgetData,
+    scheduleNotification,
+    isLoading,
+  };
 
   return (
-    <BudgetContext.Provider
-      value={{
-        budgetItems,
-        categories,
-        goals,
-        totalIncome,
-        totalExpenses,
-        balance,
-        addBudgetItem,
-        updateBudgetItem,
-        deleteBudgetItem,
-        addCategory,
-        updateCategory,
-        deleteCategory,
-        addGoal,
-        updateGoal,
-        deleteGoal,
-        updateGoalProgress,
-        exportBudgetData,
-        importBudgetData,
-        scheduleNotification,
-        isLoading,
-      }}
-    >
+    <BudgetContext.Provider value={value}>
       {children}
     </BudgetContext.Provider>
   );
@@ -299,7 +307,7 @@ export function BudgetProvider({ children }: { children: React.ReactNode }) {
 
 export function useBudget() {
   const context = useContext(BudgetContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useBudget must be used within a BudgetProvider');
   }
   return context;

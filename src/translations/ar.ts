@@ -1,54 +1,95 @@
-export default {
-  // Top-level translations for direct access
-  email: 'البريد الإلكتروني',
-  password: 'كلمة المرور',
-  signIn: 'تسجيل الدخول',
-  signUp: 'إنشاء حساب',
-  createAccount: 'إنشاء حساب جديد',
-  confirmPassword: 'تأكيد كلمة المرور',
-  emailRequired: 'البريد الإلكتروني مطلوب',
-  invalidEmail: 'يرجى إدخال بريد إلكتروني صحيح',
-  passwordRequired: 'كلمة المرور مطلوبة',
-  passwordTooShort: 'يجب أن تكون كلمة المرور 6 أحرف على الأقل',
-  confirmPasswordRequired: 'يرجى تأكيد كلمة المرور',
-  passwordsDoNotMatch: 'كلمات المرور غير متطابقة',
-  acceptTermsRequired: 'يرجى قبول الشروط والأحكام',
-  signUpError: 'فشل في إنشاء الحساب. يرجى المحاولة مرة أخرى.',
-  acceptTerms: 'أوافق على',
-  termsAndConditions: 'الشروط والأحكام',
-  alreadyHaveAccount: 'لديك حساب بالفعل؟ تسجيل الدخول',
-  backToSignIn: 'العودة إلى تسجيل الدخول',
-  
-  // Navigation labels
-  home: 'الرئيسية',
-  budget: 'الميزانية',
-  salary: 'الراتب',
-  schedule: 'الجدول',
-  settings: 'الإعدادات',
-  
-  auth: {
-    welcome: 'مرحباً',
-    noAccount: 'ليس لديك حساب؟',
-    haveAccount: 'لديك حساب بالفعل؟',
-    success: {
-      signUp: 'تم إنشاء الحساب بنجاح! يرجى التحقق من بريدك الإلكتروني لتأكيد حسابك.',
-    },
-    errors: {
-      fillAllFields: 'يرجى ملء جميع الحقول',
-      invalidCredentials: 'البريد الإلكتروني أو كلمة المرور غير صحيحة',
-      emailInUse: 'البريد الإلكتروني مستخدم بالفعل',
-      passwordsDontMatch: 'كلمات المرور غير متطابقة',
-      passwordTooShort: 'يجب أن تكون كلمة المرور 6 أحرف على الأقل',
-      emailNotConfirmed: 'يرجى تأكيد بريدك الإلكتروني قبل تسجيل الدخول',
-      genericError: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
-    },
-  },
+const ar = {
   common: {
-    ok: 'موافق',
+    // Top-level translations for direct access
+    email: 'البريد الإلكتروني',
+    password: 'كلمة المرور',
+    signIn: 'تسجيل الدخول',
+    signUp: 'إنشاء حساب',
+    createAccount: 'إنشاء حساب جديد',
+    confirmPassword: 'تأكيد كلمة المرور',
+    emailRequired: 'البريد الإلكتروني مطلوب',
+    invalidEmail: 'يرجى إدخال بريد إلكتروني صحيح',
+    passwordRequired: 'كلمة المرور مطلوبة',
+    passwordTooShort: 'يجب أن تكون كلمة المرور 6 أحرف على الأقل',
+    confirmPasswordRequired: 'يرجى تأكيد كلمة المرور',
+    passwordsDoNotMatch: 'كلمات المرور غير متطابقة',
+    acceptTermsRequired: 'يرجى قبول الشروط والأحكام',
+    signUpError: 'فشل في إنشاء الحساب. يرجى المحاولة مرة أخرى.',
+    acceptTerms: 'أوافق على',
+    termsAndConditions: 'الشروط والأحكام',
+    alreadyHaveAccount: 'لديك حساب بالفعل؟ تسجيل الدخول',
+    backToSignIn: 'العودة إلى تسجيل الدخول',
+    welcomeBack: 'مرحباً بعودتك',
+    continueWithoutAccount: 'المتابعة بدون حساب',
+    forgotPassword: 'نسيت كلمة المرور؟',
+    
+    // Navigation labels
+    home: 'الرئيسية',
+    settings: {
+      title: 'الإعدادات',
+      language: 'اللغة',
+      theme: 'المظهر',
+      notifications: 'الإشعارات',
+      about: 'حول التطبيق',
+      darkMode: 'الوضع الداكن',
+      lightMode: 'الوضع الفاتح',
+      signOut: 'تسجيل الخروج',
+      save: 'حفظ',
+      cancel: 'إلغاء',
+      delete: 'حذف',
+      edit: 'تعديل',
+      reset: 'إعادة تعيين',
+      search: 'بحث',
+      loading: 'جاري التحميل...',
+      error: 'خطأ',
+      success: 'تم بنجاح',
+      signInError: 'فشل تسجيل الدخول. يرجى التحقق من بياناتك.',
+      genericError: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
+    }
   },
-  continueWithoutAccount: 'المتابعة بدون حساب',
-  forgotPassword: 'نسيت كلمة المرور؟',
   budget: {
+    title: 'الميزانية',
+    overview: 'نظرة عامة',
+    income: {
+      title: 'الدخل',
+      add: 'إضافة دخل',
+      edit: 'تعديل الدخل',
+      delete: 'حذف الدخل',
+      source: 'المصدر',
+      amount: 'المبلغ',
+      date: 'التاريخ',
+      category: 'الفئة',
+      description: 'الوصف',
+      recurring: 'متكرر',
+      frequency: 'التكرار',
+      noIncome: 'لا يوجد دخل حتى الآن'
+    },
+    expenses: {
+      title: 'المصروفات',
+      add: 'إضافة مصروف',
+      edit: 'تعديل المصروف',
+      delete: 'حذف المصروف',
+      amount: 'المبلغ',
+      date: 'التاريخ',
+      category: 'الفئة',
+      description: 'الوصف',
+      recurring: 'متكرر',
+      frequency: 'التكرار',
+      noExpenses: 'لا توجد مصروفات حتى الآن'
+    },
+    balance: 'الرصيد',
+    totalIncome: 'إجمالي الدخل',
+    totalExpenses: 'إجمالي المصروفات',
+    categories: {
+      title: 'الفئات',
+      add: 'إضافة فئة',
+      edit: 'تعديل الفئة',
+      delete: 'حذف الفئة',
+      name: 'الاسم',
+      color: 'اللون',
+      icon: 'الأيقونة',
+      noCategories: 'لا توجد فئات حتى الآن'
+    },
     addItem: 'إضافة عنصر ميزانية',
     category: 'الفئة',
     amount: 'المبلغ',
@@ -60,10 +101,7 @@ export default {
     monthly: 'شهري',
     yearly: 'سنوي',
     expense: 'مصروف',
-    income: 'دخل',
-    totalIncome: 'إجمالي الدخل',
-    totalExpenses: 'إجمالي المصروفات',
-    balance: 'الرصيد',
+    incomeType: 'دخل',
     noItems: 'لا توجد عناصر ميزانية بعد. أضف عنصرك الأول للبدء!',
     editItem: 'تعديل عنصر الميزانية',
     deleteItem: 'حذف عنصر الميزانية',
@@ -78,13 +116,6 @@ export default {
     // Analytics
     monthlyOverview: 'نظرة شهرية',
     expenseByCategory: 'المصروفات حسب الفئة',
-    // Categories
-    categories: 'الفئات',
-    noCategories: 'لا توجد فئات بعد. أضف فئتك الأولى للبدء!',
-    addCategory: 'إضافة فئة',
-    editCategory: 'تعديل الفئة',
-    categoryName: 'اسم الفئة',
-    categoryIcon: 'أيقونة الفئة',
     // Goals
     goals: 'الأهداف',
     noGoals: 'لا توجد أهداف بعد. أضف هدفك الأول للبدء!',
@@ -94,8 +125,6 @@ export default {
     targetAmount: 'المبلغ المستهدف',
     deadline: 'الموعد النهائي',
     remaining: 'المتبقي',
-    // Overview
-    overview: 'نظرة عامة',
     // Export/Import
     export: 'تصدير',
     import: 'استيراد',
@@ -105,15 +134,27 @@ export default {
     importError: 'فشل في استيراد بيانات الميزانية',
     // Notifications
     notificationTitle: 'تذكير الميزانية',
-    notificationBody: '{type}: {amount} لـ {category}',
+    notificationBody: '{type}: {amount} لـ {category}'
   },
   salary: {
-    salary: 'الراتب',
+    title: 'الراتب',
+    details: {
+      title: 'تفاصيل الراتب',
+      amount: 'المبلغ',
+      date: 'التاريخ',
+      category: 'الفئة',
+      description: 'الوصف',
+      recurring: 'متكرر',
+      frequency: 'التكرار'
+    },
+    salary: 'الراتب'
   },
   schedule: {
-    addItem: 'إضافة عنصر جدول',
-    editItem: 'تعديل عنصر الجدول',
-    title: 'العنوان',
+    title: 'الجدول',
+    overview: 'نظرة عامة',
+    details: 'التفاصيل',
+    addItem: 'إضافة موعد',
+    editItem: 'تعديل الموعد',
     type: 'النوع',
     prayer: 'صلاة',
     work: 'عمل',
@@ -126,15 +167,15 @@ export default {
     daily: 'يومي',
     weekly: 'أسبوعي',
     monthly: 'شهري',
-    reminder: 'التذكير (دقائق قبل)',
+    reminder: 'التذكير',
     days: {
+      sunday: 'الأحد',
       monday: 'الاثنين',
       tuesday: 'الثلاثاء',
       wednesday: 'الأربعاء',
       thursday: 'الخميس',
       friday: 'الجمعة',
-      saturday: 'السبت',
-      sunday: 'الأحد',
+      saturday: 'السبت'
     },
     today: 'اليوم',
     all: 'الكل',
@@ -146,90 +187,21 @@ export default {
     saveSuccess: 'تم حفظ العنصر بنجاح',
     saveError: 'فشل في حفظ العنصر',
     invalidTime: 'يرجى إدخال أوقات صحيحة',
-    titleRequired: 'العنوان مطلوب',
+    titleRequired: 'العنوان مطلوب'
   },
-  settings: {
-    settings: 'الإعدادات',
+  shift: {
+    title: 'العنوان',
+    description: 'الوصف',
+    startDate: 'تاريخ البداية',
+    endDate: 'تاريخ النهاية',
+    isRecurring: 'متكرر',
+    status: {
+      scheduled: 'مجدول',
+      in_progress: 'قيد التنفيذ',
+      completed: 'مكتمل',
+      cancelled: 'ملغي',
+    },
   },
-  welcomeBack: 'مرحباً بعودتك',
-  language: 'اللغة',
-  theme: 'المظهر',
-  darkMode: 'الوضع الداكن',
-  lightMode: 'الوضع الفاتح',
-  signOut: 'تسجيل الخروج',
-  save: 'حفظ',
-  cancel: 'إلغاء',
-  delete: 'حذف',
-  edit: 'تعديل',
-  loading: 'جاري التحميل...',
-  error: 'خطأ',
-  success: 'نجاح',
-  signInError: 'فشل تسجيل الدخول. يرجى التحقق من بياناتك.',
-  genericError: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
-  
-  // Forgot Password
-  forgotPasswordTitle: 'إعادة تعيين كلمة المرور',
-  forgotPasswordDescription: 'أدخل بريدك الإلكتروني وسنرسل لك تعليمات إعادة تعيين كلمة المرور.',
-  resetPassword: 'إعادة تعيين كلمة المرور',
-  resetPasswordSuccess: 'تم إرسال تعليمات إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.',
-  resetPasswordError: 'فشل في إرسال تعليمات إعادة التعيين. يرجى المحاولة مرة أخرى.',
-  back: 'رجوع',
+};
 
-  // Terms and Conditions
-  terms: {
-    acceptance: 'قبول الشروط',
-    acceptanceText: 'باستخدامك لتطبيق ميزان فلو، فإنك تقر بأنك قد قرأت وفهمت ووافقت على الالتزام بهذه الشروط والأحكام.',
-    
-    services: 'الخدمات',
-    servicesText: 'يوفر تطبيق ميزان فلو أدوات وخدمات لإدارة الأموال لمساعدة المستخدمين في تتبع ميزانيتهم ورواتبهم وجداولهم. نحتفظ بالحق في تعديل أو إيقاف أي خدمة في أي وقت.',
-    
-    privacy: 'الخصوصية وحماية البيانات',
-    privacyText: 'نحن ملتزمون بحماية خصوصيتك. سيتم جمع وتخزين ومعالجة معلوماتك الشخصية وفقاً لسياسة الخصوصية وقوانين حماية البيانات المعمول بها.',
-    
-    userContent: 'محتوى المستخدم والسلوك',
-    userContentText: 'أنت مسؤول عن جميع المحتويات التي تقدمها إلى ميزان فلو ويجب عليك الامتثال للقوانين المعمول بها. نحتفظ بالحق في إزالة أي محتوى ينتهك هذه الشروط.',
-    
-    liability: 'حدود المسؤولية',
-    liabilityText: 'يتم تقديم ميزان فلو "كما هو" دون أي ضمانات. لن نكون مسؤولين عن أي أضرار ناتجة عن استخدامك للخدمة.',
-    
-    changes: 'تغييرات الشروط',
-    changesText: 'قد نقوم بتعديل هذه الشروط في أي وقت. استمرار استخدام ميزان فلو بعد هذه التغييرات يشكل قبولاً للشروط الجديدة.',
-    
-    contact: 'معلومات الاتصال',
-    contactText: 'إذا كان لديك أي أسئلة حول هذه الشروط والأحكام، يرجى الاتصال بنا على support@mizanflow.com.',
-  },
-
-  // Email Verification
-  emailVerification: {
-    title: 'تأكيد البريد الإلكتروني',
-    description: 'يرجى التحقق من بريدك الإلكتروني والنقر على رابط التحقق لإكمال التسجيل.',
-    resendButton: 'إعادة إرسال رابط التحقق',
-    resendSuccess: 'تم إعادة إرسال رابط التحقق.',
-    resendError: 'فشل في إعادة إرسال رابط التحقق. يرجى المحاولة مرة أخرى.',
-    verificationSuccess: 'تم تأكيد البريد الإلكتروني بنجاح!',
-    verificationError: 'فشل في تأكيد البريد الإلكتروني. يرجى المحاولة مرة أخرى.',
-  },
-
-  // Profile Setup
-  profile: {
-    setupTitle: 'إعداد الملف الشخصي',
-    setupDescription: 'خصص تجربتك واختيارياً قم بإنشاء حساب كامل لمزامنة بياناتك عبر الأجهزة.',
-    personalInfo: 'المعلومات الشخصية',
-    name: 'الاسم',
-    preferences: 'التفضيلات',
-    language: 'اللغة',
-    theme: 'المظهر',
-    light: 'فاتح',
-    dark: 'داكن',
-    system: 'النظام',
-    notifications: 'تفعيل الإشعارات',
-    convertToFullAccount: 'إنشاء حساب كامل',
-    convertButton: 'التحويل إلى حساب كامل',
-    saveButton: 'حفظ الملف الشخصي',
-    skipButton: 'تخطي الآن',
-    saveError: 'فشل في حفظ الملف الشخصي. يرجى المحاولة مرة أخرى.',
-    conversionError: 'فشل في إنشاء الحساب. يرجى المحاولة مرة أخرى.',
-    fillAllFields: 'يرجى ملء جميع الحقول',
-    passwordsDontMatch: 'كلمات المرور غير متطابقة',
-  },
-}; 
+module.exports = ar; 

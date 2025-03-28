@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, SectionList } from 'react-native';
 import { Text, FAB, Portal, Modal, useTheme, SegmentedButtons } from 'react-native-paper';
 import { useSchedule, ScheduleItem } from '../../src/contexts/ScheduleContext';
 import { useLanguage } from '../../src/contexts/LanguageContext';
@@ -31,6 +31,18 @@ export default function ScheduleScreen() {
     setShowAddModal(false);
     setEditingItem(null);
   };
+
+  const renderHeader = () => (
+    <SegmentedButtons
+      value={activeTab}
+      onValueChange={setActiveTab}
+      buttons={[
+        { value: 'today', label: t('schedule.today') },
+        { value: 'all', label: t('schedule.all') },
+      ]}
+      style={styles.segmentedButtons}
+    />
+  );
 
   const renderContent = () => {
     switch (activeTab) {
@@ -78,19 +90,13 @@ export default function ScheduleScreen() {
 
   return (
     <View style={styles.container}>
-      <SegmentedButtons
-        value={activeTab}
-        onValueChange={setActiveTab}
-        buttons={[
-          { value: 'today', label: t('schedule.today') },
-          { value: 'all', label: t('schedule.all') },
-        ]}
-        style={styles.segmentedButtons}
+      <SectionList
+        sections={[{ data: [], renderItem: () => null }]}
+        renderSectionHeader={() => renderHeader()}
+        renderSectionFooter={() => renderContent()}
+        contentContainerStyle={styles.contentContainer}
+        stickySectionHeadersEnabled={false}
       />
-
-      <ScrollView style={styles.scrollView}>
-        {renderContent()}
-      </ScrollView>
 
       <Portal>
         <Modal
@@ -118,8 +124,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  scrollView: {
-    flex: 1,
+  contentContainer: {
+    flexGrow: 1,
   },
   segmentedButtons: {
     margin: 16,

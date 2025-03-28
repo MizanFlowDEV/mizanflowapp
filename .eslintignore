@@ -1,0 +1,40 @@
+# Build output
+dist/
+build/
+coverage/
+
+# Dependencies
+node_modules/
+
+# Generated files
+.expo/
+*.generated.*
+*.d.ts
+
+# Config files
+*.config.js
+*.config.ts
+*.config.json
+
+# Cache and logs
+.cache/
+.eslintcache
+*.log
+
+# Metro bundler
+.expo/metro/
+.expo/metro/externals/
+.expo/metro/shims/
+
+# Test files
+__tests__/
+*.test.js
+*.test.ts
+*.test.tsx
+*.spec.js
+*.spec.ts
+*.spec.tsx
+
+# Other
+*.min.js
+*.bundle.js 
