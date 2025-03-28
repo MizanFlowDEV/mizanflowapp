@@ -8,6 +8,7 @@ import { useColorScheme } from 'react-native';
 import { LanguageProvider } from '../src/contexts/LanguageContext';
 import { ThemeProvider } from '../src/contexts/ThemeContext';
 import { BudgetProvider } from '../src/contexts/BudgetContext';
+import { ScheduleProvider } from '../src/contexts/ScheduleContext';
 
 // This can be moved to a separate file
 function useProtectedRoute(user: any) {
@@ -53,7 +54,9 @@ export default function RootLayout() {
         <ThemeProvider>
           <PaperProvider theme={theme}>
             <BudgetProvider>
-              <RootLayoutNav />
+              <ScheduleProvider>
+                <RootLayoutNav />
+              </ScheduleProvider>
             </BudgetProvider>
           </PaperProvider>
         </ThemeProvider>

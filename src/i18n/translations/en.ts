@@ -112,5 +112,40 @@ export default {
       },
     },
   },
-  // ... rest of the existing code ...
+
+  // Budget section translations
+  budget: {
+    monthlyOverview: 'Monthly Overview',
+    income: 'Income',
+    expenses: 'Expenses',
+    balance: 'Balance',
+    goals: {
+      title: 'Budget Goals',
+      noGoals: 'No goals set',
+      addGoal: 'Add Goal',
+      goalName: 'Goal Name',
+      targetAmount: 'Target Amount',
+      currentAmount: 'Current Amount',
+      deadline: 'Deadline',
+      category: 'Category'
+    },
+    categories: {
+      title: 'Categories',
+      noCategories: 'No categories',
+      addCategory: 'Add Category',
+      expenseByCategory: 'Expense by Category',
+      import: 'Import',
+      categoryName: 'Category Name',
+      budget: 'Budget',
+      spent: 'Spent',
+      remaining: 'Remaining'
+    },
+    actions: {
+      add: 'Add',
+      edit: 'Edit',
+      delete: 'Delete',
+      save: 'Save',
+      cancel: 'Cancel'
+    }
+  }
 }; 
