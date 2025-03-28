@@ -115,37 +115,80 @@ export default {
 
   // Budget section translations
   budget: {
+    // Overview section
     monthlyOverview: 'Monthly Overview',
     income: 'Income',
     expenses: 'Expenses',
     balance: 'Balance',
+    totalIncome: 'Total Income',
+    totalExpenses: 'Total Expenses',
+    overview: 'Overview',
+
+    // Goals section
     goals: {
       title: 'Budget Goals',
       noGoals: 'No goals set',
       addGoal: 'Add Goal',
+      editGoal: 'Edit Goal',
       goalName: 'Goal Name',
       targetAmount: 'Target Amount',
       currentAmount: 'Current Amount',
       deadline: 'Deadline',
       category: 'Category'
     },
+
+    // Categories section
     categories: {
       title: 'Categories',
       noCategories: 'No categories',
       addCategory: 'Add Category',
+      editCategory: 'Edit Category',
       expenseByCategory: 'Expense by Category',
       import: 'Import',
       categoryName: 'Category Name',
+      categoryIcon: 'Category Icon',
       budget: 'Budget',
       spent: 'Spent',
       remaining: 'Remaining'
     },
+
+    // Budget items
+    addItem: 'Add Budget Item',
+    editItem: 'Edit Budget Item',
+    category: 'Category',
+    amount: 'Amount',
+    description: 'Description',
+    date: 'Date',
+    recurring: 'Recurring',
+    type: 'Type',
+    expense: 'Expense',
+    income: 'Income',
+    noItems: 'No budget items yet',
+
+    // Actions
     actions: {
       add: 'Add',
       edit: 'Edit',
       delete: 'Delete',
       save: 'Save',
       cancel: 'Cancel'
+    },
+
+    // Import/Export
+    export: 'Export',
+    import: 'Import',
+    exportSuccess: 'Budget data exported successfully',
+    exportError: 'Failed to export budget data',
+    importSuccess: 'Budget data imported successfully',
+    importError: 'Failed to import budget data',
+
+    // Validation
+    errors: {
+      invalidAmount: 'Please enter a valid amount',
+      categoryRequired: 'Category is required',
+      amountRequired: 'Amount is required',
+      dateRequired: 'Date is required',
+      descriptionRequired: 'Description is required'
     }
   }
 }; 
