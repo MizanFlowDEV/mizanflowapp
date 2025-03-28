@@ -12,6 +12,15 @@ MizanFlow is a mobile application designed for professionals working on rotating
   - Secure authentication state management
   - Email verification
   - Password reset functionality
+  - Anonymous to full account conversion
+
+- **Shift Management**
+  - Create and manage work shifts
+  - Filter shifts by date range and status
+  - Detailed shift information view
+  - Shift status tracking (upcoming, completed, cancelled)
+  - Shift notes and attachments
+  - Shift statistics and analytics
 
 - **Internationalization**
   - Bilingual support (English/Arabic)
@@ -47,9 +56,11 @@ MizanFlow is a mobile application designed for professionals working on rotating
 mizanflow/
 ├── app/
 │   ├── _layout.tsx (Root layout with providers)
+│   ├── (auth)/
 │   │   ├── _layout.tsx
 │   │   ├── sign-in.tsx
-│   │   └── sign-up.tsx
+│   │   ├── sign-up.tsx
+│   │   └── verify-email.tsx
 │   └── (tabs)/
 │       ├── _layout.tsx
 │       ├── index.tsx (Home)
@@ -59,18 +70,35 @@ mizanflow/
 │       └── settings.tsx
 ├── src/
 │   ├── components/
-│   │   └── Logo.tsx
+│   │   ├── Logo.tsx
+│   │   ├── BudgetList/
+│   │   ├── ShiftCard/
+│   │   ├── ShiftDetails/
+│   │   ├── ShiftFilters/
+│   │   ├── ShiftForm/
+│   │   └── ShiftList/
 │   ├── contexts/
 │   │   ├── AuthContext.tsx
-│   │   └── LanguageContext.tsx
+│   │   ├── BudgetContext.tsx
+│   │   ├── LanguageContext.tsx
+│   │   └── ShiftContext.tsx
 │   ├── hooks/
-│   │   └── useAuth.ts
+│   │   ├── useAuth.ts
+│   │   └── useAppTheme.ts
 │   ├── config/
-│   │   └── theme.ts
-│   ├── translations/
+│   │   └── theme/
+│   │       ├── colors.ts
+│   │       ├── spacing.ts
+│   │       └── typography.ts
+│   ├── i18n/
+│   │   ├── translations/
+│   │   └── strings.ts
 │   ├── utils/
+│   │   └── logger.ts
 │   └── types/
+│       └── shift.ts
 └── assets/
+    └── fonts/
 ```
 
 ## 🛠 Technical Stack
@@ -87,113 +115,75 @@ mizanflow/
 - `@react-native-async-storage/async-storage` for local storage
 - `@supabase/supabase-js` for backend services
 - `i18next` for internationalization
+- `@react-native-community/datetimepicker` for date/time selection
 
 ### State Management
 - React Context API for global state
 - Custom hooks for business logic
+- Supabase for backend state management
 
 ## 📱 Screens Overview
 
 ### Authentication Screens
 - Sign In: Email/password login
 - Sign Up: New user registration
-- Anonymous access option
-- Forgot Password
 - Email Verification
-- Terms and Conditions
+- Anonymous access option
+- Password Reset
 
-### Main App Screens
-- Home: Dashboard view
-- Budget: Financial planning
-- Salary: Income tracking
-- Schedule: Work timetable
-- Settings: App configuration
+### Shift Management Screens
+- Shift List: Overview of all shifts
+- Shift Details: Detailed view of a single shift
+- Shift Form: Create/Edit shift information
+- Shift Filters: Filter and search shifts
+- Shift Statistics: Analytics and insights
 
-## 🔄 Hybrid Storage System
+### Settings & Profile
+- Language selection
+- Theme preferences
+- Notification settings
+- Profile management
+- Account settings
 
-The app implements a robust hybrid storage system that combines local and cloud storage:
+## 🔒 Security Features
+- Secure authentication with Supabase
+- Email verification
+- Password reset functionality
+- Row Level Security (RLS) in database
+- Secure session management
+- Protected routes
 
-1. **Local Storage (AsyncStorage)**
-   - Stores data locally on the device
-   - Works offline
-   - Faster access
-   - Persists between app restarts
+## 🌐 Offline Capabilities
+- Local data persistence
+- Offline-first architecture
+- Background sync
+- Conflict resolution
 
-2. **Remote Storage (Supabase)**
-   - Stores data in the cloud
-   - Syncs across devices
-   - Backup of data
-   - Accessible from other devices
-
-3. **Sync Strategy**
-   - When loading data:
-     1. Tries to get data from Supabase
-     2. If successful, updates local storage
-     3. If Supabase fails, uses local data
-   - When saving data:
-     1. Saves to both local and remote storage
-     2. Shows error if either save fails
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (v14 or later)
-- npm or yarn
-- Expo CLI
-- iOS Simulator (for iOS development)
-
-### Installation
+## 📦 Installation
 
 1. Clone the repository:
 ```bash
 git clone https://github.com/MizanFlowDEV/mizanflowapp.git
-cd mizanflow
 ```
 
 2. Install dependencies:
 ```bash
 npm install
-# or
-yarn install
 ```
 
-3. Create a `.env` file in the root directory with your Supabase credentials:
+3. Set up environment variables:
 ```bash
-EXPO_PUBLIC_SUPABASE_URL=your_supabase_project_url
-EXPO_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+cp .env.example .env
+# Edit .env with your Supabase credentials
 ```
 
 4. Start the development server:
 ```bash
-npm start
-# or
-yarn start
+npx expo start
 ```
-
-5. Run on iOS simulator:
-```bash
-npm run ios
-# or
-yarn ios
-```
-
-## 🔜 Next Steps
-1. Implement remaining screen functionality
-2. Add animations for better UX
-3. Integrate with backend services
-4. Add data persistence
-5. Implement push notifications
-6. Add error boundaries and fallbacks
-7. Enhance accessibility features
 
 ## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
-
 This project is licensed under the MIT License - see the LICENSE file for details.
