@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { I18n } from 'i18n-js';
 import * as Localization from 'expo-localization';
+import { I18n } from 'i18n-js';
 import en from '../translations/en';
 import ar from '../translations/ar';
 
@@ -9,8 +9,8 @@ type Language = 'en' | 'ar';
 
 interface LanguageContextType {
   language: Language;
-  toggleLanguage: () => void;
-  t: (key: string) => string;
+  setLanguage: (lang: Language) => Promise<void>;
+  t: (key: string, params?: object) => string;
   isRTL: boolean;
 }
 
@@ -25,40 +25,50 @@ i18n.defaultLocale = 'en';
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguageState] = useState<Language>('en');
 
   useEffect(() => {
-    // Load saved language preference
-    AsyncStorage.getItem('language').then((savedLanguage) => {
-      if (savedLanguage === 'en' || savedLanguage === 'ar') {
-        setLanguage(savedLanguage);
-      } else {
-        // Use device language or fallback to English
-        const deviceLanguage = Localization.locale.split('-')[0];
-        setLanguage(deviceLanguage === 'ar' ? 'ar' : 'en');
-      }
-    });
+    loadLanguage();
   }, []);
 
-  useEffect(() => {
-    i18n.locale = language;
-  }, [language]);
-
-  const toggleLanguage = async () => {
-    const newLanguage = language === 'en' ? 'ar' : 'en';
-    setLanguage(newLanguage);
-    await AsyncStorage.setItem('language', newLanguage);
+  const loadLanguage = async () => {
+    try {
+      const savedLanguage = await AsyncStorage.getItem('language');
+      if (savedLanguage) {
+        await setLanguage(savedLanguage as Language);
+      } else {
+        // Use device locale as default, fallback to 'en'
+        const deviceLocale = Localization.locale.split('-')[0];
+        await setLanguage((deviceLocale === 'ar' ? 'ar' : 'en') as Language);
+      }
+    } catch (error) {
+      console.error('Error loading language:', error);
+    }
   };
 
-  const value = {
-    language,
-    toggleLanguage,
-    t: (key: string) => i18n.t(key),
-    isRTL: language === 'ar',
+  const setLanguage = async (lang: Language) => {
+    try {
+      await AsyncStorage.setItem('language', lang);
+      setLanguageState(lang);
+      i18n.locale = lang;
+    } catch (error) {
+      console.error('Error setting language:', error);
+    }
+  };
+
+  const t = (key: string, params?: object) => {
+    return i18n.t(key, params);
   };
 
   return (
-    <LanguageContext.Provider value={value}>
+    <LanguageContext.Provider
+      value={{
+        language,
+        setLanguage,
+        t,
+        isRTL: language === 'ar',
+      }}
+    >
       {children}
     </LanguageContext.Provider>
   );
