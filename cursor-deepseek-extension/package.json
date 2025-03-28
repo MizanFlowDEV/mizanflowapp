@@ -1,0 +1,39 @@
+{
+    "name": "deepseek-mizanflow",
+    "displayName": "DeepSeek MizanFlow",
+    "description": "AI-powered shift management extension for MizanFlow",
+    "version": "1.0.0",
+    "publisher": "mizanflowdev",
+    "main": "extension.js",
+    "engines": {
+      "cursor": ">=1.6.0",
+      "vscode": "^1.75.0"
+    },
+    "categories": [
+      "Other"
+    ],
+    "dependencies": {
+      "@supabase/supabase-js": "^2.39.0",
+      "crypto": "^1.0.1"
+    },
+    "contributes": {
+      "commands": [
+        {
+          "command": "deepseek.generateShiftComponent",
+          "title": "Generate Shift Component (Bilingual)"
+        },
+        {
+          "command": "deepseek.analyzeShiftPattern",
+          "title": "Analyze Shift Schedule"
+        }
+      ]
+    },
+    "scripts": {
+      "start": "node extension.js",
+      "check-usage": "curl -H 'Authorization: Bearer $DEEPSEEK_KEY' https://api.deepseek.com/v1/usage | jq"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/MizanFlowDEV/mizanflowapp.git"
+    }
+  }
