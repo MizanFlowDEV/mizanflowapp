@@ -52,6 +52,13 @@ export function useAuth() {
 
   const fetchUser = async (userId: string) => {
     try {
+      // First try to get the auth user
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (!authUser) {
+        throw new Error('No authenticated user found');
+      }
+
+      // Try to get user from database
       const { data, error } = await supabase
         .from('users')
         .select('*')
@@ -60,37 +67,43 @@ export function useAuth() {
 
       if (error) {
         if (error.code === 'PGRST116') {
-          // No user found in the database, create a basic user object
-          const { data: { user: authUser } } = await supabase.auth.getUser();
-          if (authUser) {
-            const basicUser: User = {
-              id: authUser.id,
-              email: authUser.email || '',
-              isAnonymous: false,
-              profile: {
-                preferences: {
-                  language: 'en',
-                  theme: 'system',
-                  notifications: true,
-                },
+          // No user found in database, create one
+          const newUser: User = {
+            id: authUser.id,
+            email: authUser.email || '',
+            isAnonymous: false,
+            profile: {
+              name: authUser.user_metadata?.full_name || authUser.email?.split('@')[0] || '',
+              preferences: {
+                language: 'en',
+                theme: 'system',
+                notifications: true,
               },
-            };
-            
-            // Try to insert the user into the database
-            const { error: insertError } = await supabase
-              .from('users')
-              .insert([basicUser]);
-            
-            if (!insertError) {
-              setUser(basicUser);
-              return;
-            }
+            },
+          };
+          
+          // Insert the new user
+          const { error: insertError } = await supabase
+            .from('users')
+            .insert([{
+              id: newUser.id,
+              email: newUser.email,
+              profile_name: newUser.profile.name,
+              preferences: newUser.profile.preferences,
+            }]);
+          
+          if (insertError) {
+            console.error('Error creating user profile:', insertError);
+            throw insertError;
           }
+
+          setUser(newUser);
+          return;
         }
         throw error;
       }
       
-      // Transform the data to match our User type
+      // Transform the database data to match our User type
       const user: User = {
         id: data.id,
         email: data.email,
@@ -129,6 +142,7 @@ export function useAuth() {
 
   const signUp = async (email: string, password: string, fullName: string) => {
     try {
+      // Sign up the user with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
@@ -140,7 +154,40 @@ export function useAuth() {
       });
       if (authError) throw authError;
 
-      // The user profile will be automatically created by the database trigger
+      if (!authData.user) {
+        throw new Error('No user data returned from signup');
+      }
+
+      // Create the user profile in the database
+      const newUser: User = {
+        id: authData.user.id,
+        email: authData.user.email || '',
+        isAnonymous: false,
+        profile: {
+          name: fullName || email.split('@')[0],
+          preferences: {
+            language: 'en',
+            theme: 'system',
+            notifications: true,
+          },
+        },
+      };
+
+      const { error: insertError } = await supabase
+        .from('users')
+        .insert([{
+          id: newUser.id,
+          email: newUser.email,
+          profile_name: newUser.profile.name,
+          preferences: newUser.profile.preferences,
+        }]);
+
+      if (insertError) {
+        // If profile creation fails, attempt to delete the auth user
+        await supabase.auth.admin.deleteUser(authData.user.id);
+        throw new Error('Failed to create user profile');
+      }
+
       return { data: authData, error: null };
     } catch (error) {
       return { data: null, error };
