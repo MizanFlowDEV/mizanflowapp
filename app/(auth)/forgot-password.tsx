@@ -4,7 +4,7 @@ import { TextInput, Button, Text, useTheme } from 'react-native-paper';
 import { Link, router } from 'expo-router';
 import { useAuth } from '../../src/hooks/useAuth';
 import { useLanguage } from '../../src/contexts/LanguageContext';
-import Logo from '../../src/components/Logo';
+import { Logo } from '../../src/components/Logo';
 import * as EmailValidator from 'email-validator';
 
 export default function ForgotPasswordScreen() {

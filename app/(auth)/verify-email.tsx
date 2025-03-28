@@ -4,7 +4,7 @@ import { Text, Button, useTheme } from 'react-native-paper';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useAuth } from '../../src/hooks/useAuth';
 import { useLanguage } from '../../src/contexts/LanguageContext';
-import Logo from '../../src/components/Logo';
+import { Logo } from '../../src/components/Logo';
 
 export default function VerifyEmailScreen() {
   const theme = useTheme();

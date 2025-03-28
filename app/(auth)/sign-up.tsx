@@ -4,7 +4,7 @@ import { TextInput, Button, Text, useTheme, Checkbox } from 'react-native-paper'
 import { Link, router } from 'expo-router';
 import { useAuth } from '../../src/hooks/useAuth';
 import { useLanguage } from '../../src/contexts/LanguageContext';
-import Logo from '../../src/components/Logo';
+import { Logo } from '../../src/components/Logo';
 import * as EmailValidator from 'email-validator';
 
 export default function SignUpScreen() {
@@ -73,7 +73,7 @@ export default function SignUpScreen() {
     setError('');
 
     try {
-      await signUp(email, password);
+      await signUp(email, password, Platform.OS);
       router.replace('/(tabs)');
     } catch (err) {
       setError(err instanceof Error ? err.message : t('signUpError'));
