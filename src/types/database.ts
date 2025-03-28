@@ -1,12 +1,17 @@
 export interface User {
   id: string;
   email: string;
-  full_name: string;
-  preferred_language: 'en' | 'ar';
-  theme_preference: 'light' | 'dark';
-  notifications_enabled: boolean;
-  created_at: string;
-  updated_at: string;
+  isAnonymous?: boolean;
+  profile?: {
+    name?: string;
+    preferences?: {
+      language: 'en' | 'ar';
+      theme: 'light' | 'dark' | 'system';
+      notifications: boolean;
+    };
+  };
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Schedule {
