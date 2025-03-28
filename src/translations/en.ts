@@ -19,6 +19,13 @@ export default {
   alreadyHaveAccount: 'Already have an account? Sign In',
   backToSignIn: 'Back to Sign In',
   
+  // Navigation labels
+  home: 'Home',
+  budget: 'Budget',
+  salary: 'Salary',
+  schedule: 'Schedule',
+  settings: 'Settings',
+  
   auth: {
     welcome: 'Welcome',
     createAccount: 'Create Account',
@@ -44,8 +51,8 @@ export default {
   },
   continueWithoutAccount: 'Continue Without Account',
   forgotPassword: 'Forgot Password?',
-  home: 'Home',
-  budget: {
+  
+  budgetSection: {
     addItem: 'Add Budget Item',
     category: 'Category',
     amount: 'Amount',
@@ -98,8 +105,8 @@ export default {
     notificationTitle: 'Budget Reminder',
     notificationBody: '{type}: {amount} for {category}',
   },
-  salary: 'Salary',
-  schedule: {
+  
+  scheduleSection: {
     addItem: 'Add Schedule Item',
     editItem: 'Edit Schedule Item',
     title: 'Title',
@@ -137,7 +144,7 @@ export default {
     invalidTime: 'Please enter valid times',
     titleRequired: 'Title is required',
   },
-  settings: 'Settings',
+  
   welcomeBack: 'Welcome Back',
   language: 'Language',
   theme: 'Theme',

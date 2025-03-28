@@ -1,12 +1,33 @@
 export default {
+  // Top-level translations for direct access
+  email: 'البريد الإلكتروني',
+  password: 'كلمة المرور',
+  signIn: 'تسجيل الدخول',
+  signUp: 'إنشاء حساب',
+  createAccount: 'إنشاء حساب جديد',
+  confirmPassword: 'تأكيد كلمة المرور',
+  emailRequired: 'البريد الإلكتروني مطلوب',
+  invalidEmail: 'يرجى إدخال بريد إلكتروني صحيح',
+  passwordRequired: 'كلمة المرور مطلوبة',
+  passwordTooShort: 'يجب أن تكون كلمة المرور 6 أحرف على الأقل',
+  confirmPasswordRequired: 'يرجى تأكيد كلمة المرور',
+  passwordsDoNotMatch: 'كلمات المرور غير متطابقة',
+  acceptTermsRequired: 'يرجى قبول الشروط والأحكام',
+  signUpError: 'فشل في إنشاء الحساب. يرجى المحاولة مرة أخرى.',
+  acceptTerms: 'أوافق على',
+  termsAndConditions: 'الشروط والأحكام',
+  alreadyHaveAccount: 'لديك حساب بالفعل؟ تسجيل الدخول',
+  backToSignIn: 'العودة إلى تسجيل الدخول',
+  
+  // Navigation labels
+  home: 'الرئيسية',
+  budget: 'الميزانية',
+  salary: 'الراتب',
+  schedule: 'الجدول',
+  settings: 'الإعدادات',
+  
   auth: {
     welcome: 'مرحباً',
-    createAccount: 'إنشاء حساب جديد',
-    email: 'البريد الإلكتروني',
-    password: 'كلمة المرور',
-    confirmPassword: 'تأكيد كلمة المرور',
-    signIn: 'تسجيل الدخول',
-    signUp: 'إنشاء حساب',
     noAccount: 'ليس لديك حساب؟',
     haveAccount: 'لديك حساب بالفعل؟',
     success: {
@@ -27,7 +48,6 @@ export default {
   },
   continueWithoutAccount: 'المتابعة بدون حساب',
   forgotPassword: 'نسيت كلمة المرور؟',
-  home: 'الرئيسية',
   budget: {
     addItem: 'إضافة عنصر ميزانية',
     category: 'الفئة',
@@ -87,7 +107,9 @@ export default {
     notificationTitle: 'تذكير الميزانية',
     notificationBody: '{type}: {amount} لـ {category}',
   },
-  salary: 'الراتب',
+  salary: {
+    salary: 'الراتب',
+  },
   schedule: {
     addItem: 'إضافة عنصر جدول',
     editItem: 'تعديل عنصر الجدول',
@@ -126,7 +148,9 @@ export default {
     invalidTime: 'يرجى إدخال أوقات صحيحة',
     titleRequired: 'العنوان مطلوب',
   },
-  settings: 'الإعدادات',
+  settings: {
+    settings: 'الإعدادات',
+  },
   welcomeBack: 'مرحباً بعودتك',
   language: 'اللغة',
   theme: 'المظهر',
@@ -140,16 +164,7 @@ export default {
   loading: 'جاري التحميل...',
   error: 'خطأ',
   success: 'نجاح',
-  acceptTerms: 'أوافق على',
-  termsAndConditions: 'الشروط والأحكام',
-  alreadyHaveAccount: 'لديك حساب بالفعل؟ تسجيل الدخول',
-  emailRequired: 'البريد الإلكتروني مطلوب',
-  passwordRequired: 'كلمة المرور مطلوبة',
-  confirmPasswordRequired: 'يرجى تأكيد كلمة المرور',
-  passwordsDoNotMatch: 'كلمات المرور غير متطابقة',
-  acceptTermsRequired: 'يرجى الموافقة على الشروط والأحكام',
   signInError: 'فشل تسجيل الدخول. يرجى التحقق من بياناتك.',
-  signUpError: 'فشل إنشاء الحساب. يرجى المحاولة مرة أخرى.',
   genericError: 'حدث خطأ ما. يرجى المحاولة مرة أخرى.',
   
   // Forgot Password
@@ -158,7 +173,6 @@ export default {
   resetPassword: 'إعادة تعيين كلمة المرور',
   resetPasswordSuccess: 'تم إرسال تعليمات إعادة تعيين كلمة المرور إلى بريدك الإلكتروني.',
   resetPasswordError: 'فشل في إرسال تعليمات إعادة التعيين. يرجى المحاولة مرة أخرى.',
-  backToSignIn: 'العودة إلى تسجيل الدخول',
   back: 'رجوع',
 
   // Terms and Conditions
