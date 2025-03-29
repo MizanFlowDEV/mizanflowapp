@@ -61,11 +61,7 @@ module.exports = {
   },
   rules: {
     'no-console': ['error', { allow: ['warn', 'error'] }],
-    '@typescript-eslint/no-unused-vars': ['warn', { 
-      argsIgnorePattern: '^_',
-      varsIgnorePattern: '^_',
-      ignoreRestSiblings: true 
-    }],
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-explicit-any': 'warn',
     'react-native/no-color-literals': 'warn',
     'react-native/no-inline-styles': 'warn',
@@ -76,6 +72,14 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'no-redeclare': 'error',
     'no-import-assign': 'error',
+    'import/order': [
+      'error',
+      {
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc' },
+      },
+    ],
   },
   overrides: [
     {
